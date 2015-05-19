@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -12,7 +13,7 @@ public class Quiz {
     private Question[] questions;
 
     /**
-     * This is the basic Quiz constructor, passing in pre-existing Questions.
+     *  Basic Quiz constructor, passing in pre-existing Questions.
      *
      * @param questions An array of Question instances.
      */
@@ -21,14 +22,24 @@ public class Quiz {
     }
 
     /**
-     * This is an on-the-fly constructor that requires input from a user.
+     *  On-the-fly constructor that requires input from a user.
      */
     public Quiz() {
         // set the number of questions
-        System.out.println("Making a new quiz. How many questions?");
+        System.out.println("Making a new quiz.");
         Scanner userInput = new Scanner(System.in);
-        int numQuestions = userInput.nextInt();
-        userInput.nextLine();
+        int numQuestions = 0;
+
+        do {
+            System.out.println("How many questions?");
+            System.out.println("Enter a positive number.");
+            try {
+                numQuestions = userInput.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input.");
+            }
+            userInput.nextLine();
+        } while (numQuestions < 1);
 
         // make an array to store the questions
         this.questions = new Question[numQuestions];
@@ -42,8 +53,17 @@ public class Quiz {
             System.out.println("2 = numerical");
             System.out.println("3 = multiple choice, one answer only");
             System.out.println("4 = multiple choice, multiple answers required");
-            int type = userInput.nextInt();
-            userInput.nextLine();
+
+            int type = 0;
+            do {
+                System.out.println("Enter a number between 1 and 4: ");
+                try {
+                    type = userInput.nextInt();
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input.");
+                }
+                userInput.nextLine();
+            } while (!(type == 1 || type == 2 || type == 3 || type == 4));
 
             // set parameters appropriate for the different question types
             switch(type) {
@@ -75,6 +95,14 @@ public class Quiz {
                     System.out.println("How many choices will be provided?");
                     int numChoices = userInput.nextInt();
                     userInput.nextLine();
+
+                    // valudate user input
+                    while (numChoices < 1) {
+                        System.out.println("Invalid input. Number must be positive. Try again:");
+                        numChoices = userInput.nextInt();
+                        userInput.nextLine();
+                    }
+
                     String[] choices = new String[numChoices];
                     char choiceSlot = 'A';
                     for (int j = 0; j < numChoices; j++) {
@@ -100,6 +128,14 @@ public class Quiz {
                     System.out.println("How many choices will be provided?");
                     int numChoices = userInput.nextInt();
                     userInput.nextLine();
+
+                    // validate user input
+                    while (numChoices < 1) {
+                        System.out.println("Invalid input. Number must be positive. Try again:");
+                        numChoices = userInput.nextInt();
+                        userInput.nextLine();
+                    }
+
                     String[] choices = new String[numChoices];
                     char choiceSlot = 'A';
                     for (int j = 0; j < numChoices; j++) {
@@ -108,12 +144,12 @@ public class Quiz {
                         choiceSlot++;
                     }
                     System.out.println("Among these options, what are the correct choices?");
-                    System.out.println("List on one line, in alphabetical order.");
                     choiceSlot = 'A';
                     for (int j = 0; j < numChoices; j++) {
                         System.out.println("" + choiceSlot + ". " + choices[j]);
                         choiceSlot++;
                     }
+                    System.out.print("Enter letters on one line, in alphabetical order: ");
                     String answer = userInput.nextLine().toLowerCase();
                     questions[i] = new QuestionPoly(question, answer, choices);
                 }
@@ -165,7 +201,7 @@ public class Quiz {
     public static void main(String[] args) {
 
 /*
-        // simple quiz
+        // simple quiz to test class functionality
         String qtext = "What color is the sky?";
         Question q1 = new Question(qtext, "blue");
 
@@ -180,7 +216,7 @@ public class Quiz {
         myQuiz.administer();
 */
 
-        // build a new quiz on the fly
+        // build a new quiz on the fly, then administer it
         Quiz onTheFlyQuiz = new Quiz();
         onTheFlyQuiz.administer();
 
