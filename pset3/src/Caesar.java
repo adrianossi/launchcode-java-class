@@ -16,10 +16,7 @@ public class Caesar implements Encodable {
     public String encodeString(String input) {
         char[] inputAsArray = input.toCharArray();
         for (int i = 0; i < inputAsArray.length; i++) {
-
-            System.out.print("old char = " + inputAsArray[i] + "; ");
             inputAsArray[i] = this.encodeMap.get(inputAsArray[i]);
-            System.out.println("new char = " + inputAsArray[i]);
         }
         String output = new String(inputAsArray);
         return output;
@@ -29,14 +26,11 @@ public class Caesar implements Encodable {
     public String decodeString(String input) {
         char[] inputAsArray = input.toCharArray();
         for (int i = 0; i < inputAsArray.length; i++) {
-            System.out.print("old char = " + inputAsArray[i] + "; ");
             inputAsArray[i] = this.decodeMap.get(inputAsArray[i]);
-            System.out.println("new char = " + inputAsArray[i]);
         }
         String output = new String(inputAsArray);
         return output;
     }
-
 
     public HashMap<Character, Character> createEncodeMap(int key) {
         HashMap<Character, Character> newEncodeMap = new HashMap<Character, Character>();

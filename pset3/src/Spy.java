@@ -24,22 +24,33 @@ public class Spy {
 
     public void setCryptStrategy(Encodable cryptStrategy) {
         this.cryptStrategy = cryptStrategy;
+        this.setEncodedMsg("");
     }
 
     public Encodable getCryptStrategy() {
         return this.cryptStrategy;
     }
 
+    public boolean isAlpha(String input) {
+        return input.matches("[a-z]+");
+    }
+
     public static void main(String args[]) {
         Spy bond = new Spy(new Caesar(1));
         bond.setEncodedMsg("shaken");
-        System.out.println(bond.getEncodedMsg());
-        System.out.println(bond.getDecodedMsg());
+        System.out.println("msg 1 encoded: " + bond.getEncodedMsg());
+        System.out.println("msg 1 decoded: " + bond.getDecodedMsg());
 
         bond.setCryptStrategy(new Caesar(13));
         bond.setEncodedMsg("licensetokill");
-        System.out.println(bond.getEncodedMsg());
-        System.out.println(bond.getDecodedMsg());
+        System.out.println("msg 2 encoded: " + bond.getEncodedMsg());
+        System.out.println("msg 2 decoded: " + bond.getDecodedMsg());
+
+        bond.setCryptStrategy(new Vigenere("james"));
+        bond.setEncodedMsg("doubleohseven");
+        System.out.println("msg 3 encoded: " + bond.getEncodedMsg());
+        System.out.println("msg 3 decoded: " + bond.getDecodedMsg());
 
     }
+
 }
