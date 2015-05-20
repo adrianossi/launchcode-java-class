@@ -36,17 +36,17 @@ public class Spy {
     }
 
     public static void main(String args[]) {
-        Spy bond = new Spy(new Caesar(1));
+        Spy bond = SpyFactory.getSpy(EncodableFactory.getCaesar(1));
         bond.setEncodedMsg("shaken");
         System.out.println("msg 1 encoded: " + bond.getEncodedMsg());
         System.out.println("msg 1 decoded: " + bond.getDecodedMsg());
 
-        bond.setCryptStrategy(new Caesar(13));
+        bond.setCryptStrategy(EncodableFactory.getCaesar(13));
         bond.setEncodedMsg("licensetokill");
         System.out.println("msg 2 encoded: " + bond.getEncodedMsg());
         System.out.println("msg 2 decoded: " + bond.getDecodedMsg());
 
-        bond.setCryptStrategy(new Vigenere("james"));
+        bond.setCryptStrategy(EncodableFactory.getVigenere("james"));
         bond.setEncodedMsg("doubleohseven");
         System.out.println("msg 3 encoded: " + bond.getEncodedMsg());
         System.out.println("msg 3 decoded: " + bond.getDecodedMsg());
